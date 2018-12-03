@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+    <input type="text" id="clientName" pattern="[a-z,A-Z]{4,8}" required></input>
+    <span>Name:</span>
+    <input type="submit" onclick="sendUserInfo()"></input>
+  </div>
+  <div class="message"></div>
+</body>
+<script type="text/javascript">
+  var name_input = document.getElementById("clientName");
+  var messageBox = document.getElementById('message');
+  var ws;
+  function sendUserInfo() {
+    if (name_input.validity.patternMismatch){
+      window.alert("Must Be 4-8 characters");
+      return;
+
+    }
+    startSocket();
+  }
+  function createMessageBox(){
+  
+  }
+  function createSshSession(){
+    createMessageBox();
+  }
+  function startSocket(){
+    ws = new WebSocket("ws://cs.indstate.edu:9000","test");
+    ws.onopen = ()=>createSshSession;
+    ws.onmessage=function(message){
+      document.querySelector("body>div").innerHTML=message.data;
+    }
+  }
+
+</script>
+
+</html>
